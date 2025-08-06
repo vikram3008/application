@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Premium Payment - Movie Family</title>
+  <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Upgrade to Premium</h2>
+    <p>Scan the QR code below to pay and unlock premium content for 30 days.</p>
+
+    <img src="{{ url_for('static', filename='qr.png') }}" alt="Scan QR to Pay" style="width: 300px; margin: 20px 0;" />
+
+    <form action="{{ url_for('confirm_payment') }}" method="POST">
+      <input type="hidden" name="username" value="{{ username }}">
+      <button type="submit">I have paid</button>
+    </form>
+
+    <p class="form-footer">Go back to <a href="{{ url_for('home') }}">Main Page</a></p>
+  </div>
+
+</body>
+</html>

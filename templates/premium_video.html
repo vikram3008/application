@@ -1,0 +1,19 @@
+<!-- templates/premium_video.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Premium Video</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <h1>Welcome, {{ user.username }} (Premium User)</h1>
+    
+    <video width="720" controls>
+        <source src="{{ url_for('static', filename='premium_video.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <br><br>
+    <a href="./main.html">Back to Home</a>
+</body>
+</html>

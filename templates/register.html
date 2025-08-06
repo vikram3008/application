@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Movie Family</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Register</h2>
+        <form class="register-form">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter a username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter a password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p class="form-footer">Already have an account? <a href="./login.html">Login here</a>.</p>
+    </div>
+
+    <script>
+    document.querySelector('.register-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const response = await fetch('http://127.0.0.1:5000/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+        alert(result.message);
+        if (result.success) {
+            window.location.href = "login.html";
+        }
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{
+    "vik": {
+        "password": "1234",
+        "is_premium": false,
+        "premium_expiry": null
+    },
+    "vikgupta": {
+        "password": "1234",
+        "is_premium": false,
+        "premium_expiry": null
+    },
+    "vg": {
+        "password": "1234",
+        "is_premium": false,
+        "premium_expiry": null
+    },
+    "abcd": {
+        "password": "1234",
+        "is_premium": false,
+        "premium_expiry": null
+    }
+}

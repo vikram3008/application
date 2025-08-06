@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Family Page</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+        </div>
+        <div class="banner">
+            <img src="{{ url_for('static', filename='family-movie.jpg') }}" alt="Family Watching Movie">
+        </div>
+        <div class="auth-links">
+            <a href="./login.html">Login</a>
+            <a href="./register.html">Register</a>
+        </div>
+    </header>
+
+    <main>
+        <p class="welcome-text">FUN CULTURE STORIES ALL IN MARATHI</p>
+
+        <section class="explore">
+            <h3>Explore Free Stories</h3>
+            <div class="features">
+                <div>➡️ 1. High quality audio stories</div>
+                <div>➡️ 2. Safe and ad-free</div>
+                <div>➡️ 3. Marathi cultural roots</div>
+            </div>
+        </section>
+
+        <h2 class="section-title">Free Content</h2>
+
+        <section class="video-grid">
+            {% for i in range(1, 16) %}
+            <div class="video-card">
+                <h4>Video {{ i }}</h4>
+                <video controls>
+                    <source src="video{{ i }}.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            {% endfor %}
+        </section>
+
+        <h2 class="section-title">Premium Content</h2>
+
+        <div class="promo-box inline-promo">
+            <h3>🎉 Limited Time Offer!</h3>
+            <p>Access <strong>Premium Videos</strong> for just <span class="price-now">₹39</span></p>
+            <p class="price-cut">(<s>₹50</s> Save ₹11!)</p>
+            <button class="buy-button">Buy Now</button>
+        </div>
+
+        <section class="video-grid premium">
+            {% for i in range(1, 16) %}
+            <div class="video-card">
+                <h4>Premium Video {{ i }}</h4>
+                <video controls>
+                    <source src="premium{{ i }}.mp4" type="video/mp4">
+                </video>
+            </div>
+            {% endfor %}
+        </section>
+
+        <footer class="site-footer">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Insta</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const isPremium = localStorage.getItem("isPremium") === "true";
+            const username = localStorage.getItem("username");
+
+            const premiumVideos = document.querySelectorAll(".premium video");
+
+            premiumVideos.forEach(video => {
+                video.addEventListener("play", function (e) {
+                    if (!isLoggedIn) {
+                        e.preventDefault();
+                        e.target.pause();
+                        alert("Please log in to access premium videos.");
+                        window.location.href = "{{ url_for('login_page') }}";
+                    } else if (!isPremium) {
+                        e.preventDefault();
+                        e.target.pause();
+                        alert("This is premium content. Please upgrade your account.");
+                    }
+                });
+            });
+
+            const buyButton = document.querySelector(".buy-button");
+            if (buyButton) {
+                buyButton.addEventListener("click", function () {
+                    if (!isLoggedIn) {
+                        alert("Please log in first to purchase premium access.");
+                        window.location.href = "{{ url_for('login_page') }}";
+                        return;
+                    }
+
+                    // Redirect user to payment page with username
+                    window.location.href = `/payment?username=${encodeURIComponent(username)}`;
+                });
+            }
+
+            // Hide Buy Now button if already premium
+            if (isPremium && buyButton) {
+                buyButton.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+
+</html>
